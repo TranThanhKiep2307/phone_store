@@ -52,32 +52,79 @@ class product
 
     }
     public function show_product (){
-        $query = "SELECT * FROM sanpham ORDER BY SP_MA DESC";
+        $query = "SELECT sanpham.*, danhmuc.DMSP_TEN, loai_sp.LSP_TEN
+        FROM sanpham INNER JOIN danhmuc ON sanpham.DMSP_MA = danhmuc.DMSP_MA
+        INNER JOIN loai_sp ON sanpham.LSP_MA = loai_sp.LSP_MA 
+        order by sanpham.SP_MA DESC";
         $result = $this->db->select($query);
         return $result;
     }
 
-    public function update_product($SP_TEN,$id){
-        $SP_TEN = $this -> fm -> validation ($SP_TEN);
-        $SP_TEN = mysqli_real_escape_string($this->db->link, $SP_TEN);
-        $id = mysqli_real_escape_string($this->db->link, $id);
+    public function update_product($data,$files,$id){
 
-        if(empty($SP_TEN)){
-            $alert = "<span class='error'> Tên sản phẩm không được trống!!!</span>";
+        $SP_TEN = mysqli_real_escape_string($this->db->link, $data['SP_TEN']);
+        $danhmuc = mysqli_real_escape_string($this->db->link, $data['danhmuc']);
+        $loai_sp = mysqli_real_escape_string($this->db->link, $data['loai_sp']);
+        $SP_MOTA = mysqli_real_escape_string($this->db->link, $data['SP_MOTA']);
+        $SP_GIA = mysqli_real_escape_string($this->db->link, $data['SP_GIA']);
+        $SP_TRANGTHAI = mysqli_real_escape_string($this->db->link, $data['SP_TRANGTHAI']);
+        
+        //Kiểm tra và lấy hình ảnh cho vào thư mục uploads
+        $permited = array('jpg', 'jpeg', 'png', 'gif');
+        $file_name = $_FILES['SP_HINHANH']['name'];  
+        $file_size = $_FILES['SP_HINHANH']['size'];  
+        $file_temp = $_FILES['SP_HINHANH']['tmp_name'];
+        
+        $div = explode('.',$file_name);
+        $file_ext = strtolower(end($div));
+        $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+        $uploaded_image = "uploads/".$unique_image;
+
+        if($SP_TEN == "" || $danhmuc == "" || $loai_sp == "" || $SP_MOTA == "" || $SP_GIA == "" || $SP_TRANGTHAI == ""){
+            $alert = "<span class='error'> Các thành phần này không được trống!!!</span>";
             return $alert;
         }else{
-            $query = "UPDATE loai_sp SET SP_TEN = '$SP_TEN' WHERE SP_MA = '$id'";
+            if(!empty($file_name)){
+                //Chọn ảnh để up
+                if($file_size > 204800){
+                    $alert = "<span class='error'> Kích thước ảnh quá lớn!!! Bạn chỉ được upload ảnh dưới 20GB</span>";
+                    return $alert;
+                }elseif(in_array($file_ext, $permited) == false)
+                {
+                    $alert = "<span class='error'> Bạn chỉ được upload hình thuộc định dạng: - ".implode(',',$permited)."</span>";
+                    return $alert;
+                }
+                $query = "UPDATE sanpham SET 
+                SP_TEN = '$SP_TEN', DMSP_MA = '$danhmuc', LSP_MA = '$loai_sp', SP_GIA = '$SP_GIA', 
+                SP_TRANGTHAI = 'SP_TRANGTHAI', SP_HINHANH = '$unique_image'
+                WHERE SP_MA = '$id'";
+            }else{
+                //Không chọn ảnh
+                $query = "UPDATE sanpham SET 
+                SP_TEN = '$SP_TEN', DMSP_MA = '$danhmuc', LSP_MA = '$loai_sp', SP_GIA = '$SP_GIA', 
+                SP_TRANGTHAI = 'SP_TRANGTHAI'
+                WHERE SP_MA = '$id'";
+            }
             $result = $this->db->update($query);
             if($result){
-                $alert = "<span class='success'> Cập nhật sản phẩm thành công!</span>";
+                $alert = "<span class='success'> Sửa sản phẩm thành công!</span>";
                 return $alert; 
             }else{
-                $alert = "<span class='error'> Cập nhật sản phẩm thất bại!!!</span>";
+                $alert = "<span class='error'> Sửa sản phẩm thất bại!!!</span>";
                 return $alert; 
             }
+            
         }
     }
-
+    // $query = "UPDATE loai_sp SET SP_TEN = '$SP_TEN' WHERE SP_MA = '$id'";
+    // $result = $this->db->update($query);
+    // if($result){
+    //     $alert = "<span class='success'> Cập nhật sản phẩm thành công!</span>";
+    //     return $alert; 
+    // }else{
+    //     $alert = "<span class='error'> Cập nhật sản phẩm thất bại!!!</span>";
+    //     return $alert; 
+    // }
     public function delete_product($id) {
         $query = "DELETE FROM sanpham WHERE SP_MA = '$id'";
         $result = $this->db->delete($query);

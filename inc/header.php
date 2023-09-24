@@ -1,3 +1,13 @@
+<?php 
+	@include('lib/session.php');
+	session::init();
+?>
+<?php
+  header("Cache-Control: no-cache, must-revalidate");
+  header("Pragma: no-cache"); 
+  header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); 
+  header("Cache-Control: max-age=2592000");
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -134,7 +144,7 @@
 											<h5>SUBTOTAL: $2940.00</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="#">View Cart</a>
+											<a href="cart.php">View Cart</a>
 											<a href="checkout.php">Checkout<i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>

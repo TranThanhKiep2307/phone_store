@@ -9,10 +9,25 @@
 <?php
     @include('../classes/product.php');
 ?>
+<?php
+    @include_once('../helpers/format.php');
+?>
+<?php
+	$pd = new product();
+	if (isset($_GET['productid'])) {
+        $id = $_GET['productid'];
+		$delete_pro = $pd -> delete_product($id);
+    }
+?>
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Danh sách sản phẩm</h2>
         <div class="block">  
+			<?php
+			if(isset($delete_pro)){
+				echo $delete_pro;
+			}
+			?>
             <table class="data display datatable" id="example">
 			<thead>
 				<tr>
@@ -24,11 +39,11 @@
 					<th>Giá sản phẩm</th>
 					<th>Hình ảnh sản phẩm</th>
 					<th>Trạng thái sản phẩm</th>
+					<th>Chỉnh sửa sản phẩm</th>
 				</tr>
 			</thead>
 			<tbody>
 			<?php 
-				$pd = new product();
 				$pdlist = $pd -> show_product();
 				if($pdlist){
 					$i = 0;
@@ -38,12 +53,16 @@
 				<tr class="odd gradeX">
 					<td><?php echo $i?></td>
 					<td><?php echo $result['SP_TEN']?></td>
-					<td><?php echo $result['DMSP_MA']?></td>
-					<td><?php echo $result['LSP_MA']?></td>
-					<td><?php echo $result['SP_MOTA']?></td>
+					<td><?php echo $result['DMSP_TEN']?></td>
+					<td><?php echo $result['LSP_TEN']?></td>
+					<td><?php 
+						$fm = new Format();
+						echo $fm -> textShorten($result['SP_MOTA'], 25);
+					?></td>
 					<td><?php echo $result['SP_GIA']?></td>
-					<td class="center"> 4</td>
-					<!-- <td><a href="">Edit</a> || <a href="">Delete</a></td> -->
+					<td><img src="uploads/<?php echo $result['SP_HINHANH']?>" width="70px"></td>
+					<!-- <td class="center"> 4</td> -->
+					
 					<td><?php 
 						if($result['SP_TRANGTHAI']==1){
 							echo 'Nổi bật';
@@ -51,6 +70,8 @@
 							echo 'Không nổi bật';
 						}
 					?></td>
+					<td><a href="productedit.php?productid=<?php echo $result['SP_MA'] ?>">Edit</a> || 
+					<a onclick =  "return confirm ('Bạn có chắc muốn xóa không???')" href="?productid=<?php echo $result['SP_MA'] ?>">Delete</a></td>
 				</tr>
 			<?php
 				}

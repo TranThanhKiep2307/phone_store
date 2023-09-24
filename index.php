@@ -1,4 +1,3 @@
-
 <?php 
 $activate = "index";
 @include('inc/header.php');
