@@ -123,19 +123,18 @@
                         <select id="select" name="SP_TRANGTHAI">
                             <option>Chọn trạng thái</option>
                             <?php
-                            if($result_product['SP_TRANGTHAI']==1){
+                            if($result_product['SP_TRANGTHAI']==0){
                             ?>
-                                <option selected value="1">Nổi bật</option>
-                                <option value="0">Không nổi bật</option>
+                                <option selected value="0">Nổi bật</option>
+                                <option value="1">Không nổi bật</option>
                             <?php
                             }else{
                                 ?> 
-                                <option value="1">Nổi bật</option>
-                                <option selected value="0">Không nổi bật</option>
+                                <option value="0">Nổi bật</option>
+                                <option selected value="1   ">Không nổi bật</option>
                             <?php
                             }
-                            ?>
-                           
+                            ?>   
                         </select>
                     </td>
                 </tr>

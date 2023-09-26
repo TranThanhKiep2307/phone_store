@@ -38,7 +38,7 @@ ul.nav li ul li {
 	max-width:none;
 }
 ul.nav li a {
-	color:#feaf39;
+	color:#B3CBD6;
 	font-weight:bold;
 	text-decoration:none;
 	display:block;
@@ -62,13 +62,13 @@ ul.nav li ul li a {
 ul.nav li:hover a,
 ul.nav li a:hover,
 ul.nav li a:focus {color:#000; background:#103D5F;}
-ul.nav li a:active {color:#666; background:#feaf39;}
+ul.nav li a:active {color:#666; background:#B3CBD6;}
 ul.nav li:hover ul {left:0;z-index:10}
 ul.nav li ul,
 ul.nav li {}
 ul.nav li:hover ul li a {color:#444;}
-ul.nav li:hover ul li a:hover {color:#000; background:#feaf39;}
-ul.nav li:hover ul li a:active {color:#666; background:#feaf39;}
+ul.nav li:hover ul li a:hover {color:#000; background:#B3CBD6;}
+ul.nav li:hover ul li a:active {color:#666; background:#B3CBD6;}
 
 ul.nav li.current a {color:#666; background:#fff; cursor:default; font-weight:bold;}
 ul.nav li.current ul {left:0;z-index:5}
@@ -113,19 +113,19 @@ ul.main li ul li a {
   border-top:1px solid #1A3A52;
   background:#103D5F;
 }
-ul.main li a:focus {color:#fff; background:#feaf39;}
+ul.main li a:focus {color:#fff; background:#B3CBD6;}
 ul.main li ul li a:hover {
   color:#fff;
   background:#103D5F;
 }
 ul.main li:hover a {
   color:#fff;
-  background:#feaf39;
+  background:#B3CBD6;
 }
-ul.main li:hover ul li a {color:#feaf39;}
-ul.main li:hover ul li a:hover {color:#feaf39; background:#feaf39;}
+ul.main li:hover ul li a {color:#B3CBD6;}
+ul.main li:hover ul li a:hover {color:#B3CBD6; background:#B3CBD6;}
 ul.main li:hover a:active {background:#103D5F;}
-ul.main li:hover ul li a:active {color:#feaf39; background:#103D5F;}
+ul.main li:hover ul li a:active {color:#B3CBD6; background:#103D5F;}
 
 
 /* secondary list
@@ -160,10 +160,10 @@ ul.nav li.secondary span.status span {
 }
 ul.nav li.secondary:hover a {
 	color:#fff;
-	background:#feaf39;
+	background:#B3CBD6;
 }
 ul.nav li.secondary:hover a:hover {
-	background:#feaf39;
+	background:#B3CBD6;
 }
 ul.nav li.secondary:hover a:active {background:#1F4562;}
 

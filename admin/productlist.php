@@ -64,7 +64,7 @@
 					<!-- <td class="center"> 4</td> -->
 					
 					<td><?php 
-						if($result['SP_TRANGTHAI']==1){
+						if($result['SP_TRANGTHAI'] == 0){
 							echo 'Nổi bật';
 						}else{
 							echo 'Không nổi bật';

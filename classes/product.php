@@ -1,6 +1,7 @@
 <?php
-@include_once('../lib/database.php');
-@include_once('../helpers/format.php');
+$filepath = realpath(dirname(__FILE__));
+@include_once($filepath.'/../lib/database.php');
+@include_once($filepath.'/../helpers/format.php');
 ?>
 
 <?php 
@@ -102,7 +103,7 @@ class product
                 //Không chọn ảnh
                 $query = "UPDATE sanpham SET 
                 SP_TEN = '$SP_TEN', DMSP_MA = '$danhmuc', LSP_MA = '$loai_sp', SP_GIA = '$SP_GIA', 
-                SP_TRANGTHAI = 'SP_TRANGTHAI'
+                SP_TRANGTHAI = '$SP_TRANGTHAI'
                 WHERE SP_MA = '$id'";
             }
             $result = $this->db->update($query);
@@ -116,15 +117,6 @@ class product
             
         }
     }
-    // $query = "UPDATE loai_sp SET SP_TEN = '$SP_TEN' WHERE SP_MA = '$id'";
-    // $result = $this->db->update($query);
-    // if($result){
-    //     $alert = "<span class='success'> Cập nhật sản phẩm thành công!</span>";
-    //     return $alert; 
-    // }else{
-    //     $alert = "<span class='error'> Cập nhật sản phẩm thất bại!!!</span>";
-    //     return $alert; 
-    // }
     public function delete_product($id) {
         $query = "DELETE FROM sanpham WHERE SP_MA = '$id'";
         $result = $this->db->delete($query);
@@ -138,6 +130,13 @@ class product
     }
     public function getproductbyId($id){
         $query = "SELECT * FROM sanpham WHERE SP_MA = '$id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    //end back-end
+    public function getproduct_feathered(){
+        $query = "SELECT * FROM sanpham WHERE SP_TRANGTHAI = '0'";
         $result = $this->db->select($query);
         return $result;
     }

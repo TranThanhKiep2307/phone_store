@@ -1,6 +1,22 @@
 <?php 
+	@include('config/config.php');
 	@include('lib/session.php');
-	session::init();
+	Session::init();
+?>
+<?php
+	@include_once('lib/database.php');
+	@include_once('helpers/format.php');
+	
+	spl_autoload_register(function ($class) {
+		include 'classes/' . $class . '.php';
+	});
+	
+	$db = new Database();
+	$fm = new Format();
+	$ct = new cart();
+	$us = new user();
+	$cat = new category();
+	$product = new product();
 ?>
 <?php
   header("Cache-Control: no-cache, must-revalidate");
