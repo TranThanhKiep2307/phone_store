@@ -26,7 +26,7 @@
                     echo $insert_product;
                 }
                 ?>               
-         <form action=" " method="post" enctype="multipart/form-data">
+         <form action="" method="post" enctype="multipart/form-data">
             <table class="form">
                
                 <tr>
@@ -106,6 +106,15 @@
                     </td>
                 </tr>
 				
+                <tr>
+                    <td>
+                        <label>Màu sản phẩm</label>
+                    </td>
+                    <td>
+                        <input type="text" name="SP_MAU" placeholder="Nhập màu sản phẩm" class="medium" />
+                    </td>
+                </tr>
+
 				<tr>
                     <td>
                         <label>Trạng thái sản phẩm</label>
@@ -113,8 +122,21 @@
                     <td>
                         <select id="select" name="SP_TRANGTHAI">
                             <option>Chọn trạng thái</option>
-                            <option value="1">Nổi bật</option>
-                            <option value="0">Không nổi bật</option>
+                            <option value="0">Nổi bật</option>
+                            <option value="1">Không nổi bật</option>
+                        </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <label>Tình trạng sản phẩm</label>
+                    </td>
+                    <td>
+                        <select id="select" name="SP_TINHTRANG">
+                            <option>Chọn tình trạng</option>
+                            <option value="0">Còn hàng</option>
+                            <option value="1">Hết hàng</option>
                         </select>
                     </td>
                 </tr>

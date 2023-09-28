@@ -114,7 +114,16 @@
                         <input type="file" name="SP_HINHANH"/>
                     </td>
                 </tr>
-				
+
+				<tr>
+                    <td>
+                        <label>Màu sản phẩm</label>
+                    </td>
+                    <td>
+                        <input type="text" value="<?php echo $result_product['SP_MAU']?>" name="SP_MAU"  class="medium" />
+                    </td>
+                </tr>
+
 				<tr>
                     <td>
                         <label>Trạng thái sản phẩm</label>
@@ -131,7 +140,31 @@
                             }else{
                                 ?> 
                                 <option value="0">Nổi bật</option>
-                                <option selected value="1   ">Không nổi bật</option>
+                                <option selected value="1">Không nổi bật</option>
+                            <?php
+                            }
+                            ?>   
+                        </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <label>Tình trạng sản phẩm</label>
+                    </td>
+                    <td>
+                        <select id="select" name="SP_TINHTRANG">
+                            <option>Chọn tình trạng</option>
+                            <?php
+                            if($result_product['SP_TINHTRANG']==0){
+                            ?>
+                                <option selected value="0">Còn hàng</option>
+                                <option value="1">Hết hàng</option>
+                            <?php
+                            }else{
+                                ?> 
+                                <option value="0">Còn hàng</option>
+                                <option selected value="1">Hết hàng</option>
                             <?php
                             }
                             ?>   

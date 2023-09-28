@@ -38,7 +38,9 @@
 					<th>Mô tả sản phẩm</th>
 					<th>Giá sản phẩm</th>
 					<th>Hình ảnh sản phẩm</th>
+					<th>Màu sản phẩm</th>
 					<th>Trạng thái sản phẩm</th>
+					<th>Tình trạng sản phẩm</th>
 					<th>Chỉnh sửa sản phẩm</th>
 				</tr>
 			</thead>
@@ -61,13 +63,19 @@
 					?></td>
 					<td><?php echo $result['SP_GIA']?></td>
 					<td><img src="uploads/<?php echo $result['SP_HINHANH']?>" width="70px"></td>
-					<!-- <td class="center"> 4</td> -->
-					
+					<td><?php echo $result['SP_MAU']?></td>
 					<td><?php 
 						if($result['SP_TRANGTHAI'] == 0){
 							echo 'Nổi bật';
 						}else{
 							echo 'Không nổi bật';
+						}
+					?></td>
+					<td><?php 
+						if($result['SP_TINHTRANG'] == 0){
+							echo 'Còn hàng';
+						}else{
+							echo 'Hết hàng';
 						}
 					?></td>
 					<td><a href="productedit.php?productid=<?php echo $result['SP_MA'] ?>">Edit</a> || 

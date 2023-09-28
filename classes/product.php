@@ -15,13 +15,15 @@ class product
         $this -> fm= new Format();
     }
     public function insert_product($data,$files){
-        $SP_TEN = mysqli_real_escape_string($this->db->link, $data['SP_TEN']);
-        $danhmuc = mysqli_real_escape_string($this->db->link, $data['danhmuc']);
-        $loai_sp = mysqli_real_escape_string($this->db->link, $data['loai_sp']);
-        $SP_MOTA = mysqli_real_escape_string($this->db->link, $data['SP_MOTA']);
-        $SP_GIA = mysqli_real_escape_string($this->db->link, $data['SP_GIA']);
+        $SP_TEN       = mysqli_real_escape_string($this->db->link, $data['SP_TEN']);
+        $danhmuc      = mysqli_real_escape_string($this->db->link, $data['danhmuc']);
+        $loai_sp      = mysqli_real_escape_string($this->db->link, $data['loai_sp']);
+        $SP_MOTA      = mysqli_real_escape_string($this->db->link, $data['SP_MOTA']);
+        $SP_GIA       = mysqli_real_escape_string($this->db->link, $data['SP_GIA']);
+        $SP_MAU       = mysqli_real_escape_string($this->db->link, $data['SP_MAU']);
         $SP_TRANGTHAI = mysqli_real_escape_string($this->db->link, $data['SP_TRANGTHAI']);
-        
+        $SP_TINHTRANG = mysqli_real_escape_string($this->db->link, $data['SP_TINHTRANG']);
+
         //Kiểm tra và lấy hình ảnh cho vào thư mục uploads
         $permited = array('jpg', 'jpeg', 'png', 'gif');
         $file_name = $_FILES['SP_HINHANH']['name'];  
@@ -33,13 +35,14 @@ class product
         $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
         $uploaded_image = "uploads/".$unique_image;
 
-        if($SP_TEN == "" || $danhmuc == "" || $loai_sp == "" || $SP_MOTA == "" || $SP_GIA == "" || $SP_TRANGTHAI == "" || $SP_TEN == "" || $file_name == ""){
+        if($SP_TEN == "" || $danhmuc == "" || $loai_sp == "" || $SP_MOTA == "" || $SP_GIA == "" || $SP_MAU == ""
+        || $SP_TRANGTHAI == "" || $SP_TINHTRANG == "" || $file_name == ""){
             $alert = "<span class='error'> Các thành phần này không được trống!!!</span>";
             return $alert;
         }else{
             move_uploaded_file($file_temp,$uploaded_image);
-            $query = "INSERT INTO sanpham(SP_TEN,DMSP_MA,LSP_MA,SP_MOTA,SP_GIA,SP_TRANGTHAI,SP_HINHANH) 
-            VALUES ('$SP_TEN','$danhmuc','$loai_sp','$SP_MOTA','$SP_GIA','$SP_TRANGTHAI','$unique_image')";
+            $query = "INSERT INTO sanpham(SP_TEN, DMSP_MA, LSP_MA, SP_MOTA, SP_GIA, SP_MAU, SP_TRANGTHAI, SP_TINHTRANG, SP_HINHANH) 
+            VALUES ('$SP_TEN','$danhmuc','$loai_sp','$SP_MOTA','$SP_GIA','$SP_MAU','$SP_TRANGTHAI','$SP_TINHTRANG','$unique_image')";
             $result = $this->db->insert($query);
             if($result){
                 $alert = "<span class='success'> Thêm sản phẩm thành công!</span>";
@@ -63,12 +66,14 @@ class product
 
     public function update_product($data,$files,$id){
 
-        $SP_TEN = mysqli_real_escape_string($this->db->link, $data['SP_TEN']);
-        $danhmuc = mysqli_real_escape_string($this->db->link, $data['danhmuc']);
-        $loai_sp = mysqli_real_escape_string($this->db->link, $data['loai_sp']);
-        $SP_MOTA = mysqli_real_escape_string($this->db->link, $data['SP_MOTA']);
-        $SP_GIA = mysqli_real_escape_string($this->db->link, $data['SP_GIA']);
+        $SP_TEN       = mysqli_real_escape_string($this->db->link, $data['SP_TEN']);
+        $danhmuc      = mysqli_real_escape_string($this->db->link, $data['danhmuc']);
+        $loai_sp      = mysqli_real_escape_string($this->db->link, $data['loai_sp']);
+        $SP_MOTA      = mysqli_real_escape_string($this->db->link, $data['SP_MOTA']);
+        $SP_GIA       = mysqli_real_escape_string($this->db->link, $data['SP_GIA']);
+        $SP_MAU       = mysqli_real_escape_string($this->db->link, $data['SP_MAU']);
         $SP_TRANGTHAI = mysqli_real_escape_string($this->db->link, $data['SP_TRANGTHAI']);
+        $SP_TINHTRANG = mysqli_real_escape_string($this->db->link, $data['SP_TINHTRANG']);
         
         //Kiểm tra và lấy hình ảnh cho vào thư mục uploads
         $permited = array('jpg', 'jpeg', 'png', 'gif');
@@ -81,7 +86,8 @@ class product
         $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
         $uploaded_image = "uploads/".$unique_image;
 
-        if($SP_TEN == "" || $danhmuc == "" || $loai_sp == "" || $SP_MOTA == "" || $SP_GIA == "" || $SP_TRANGTHAI == ""){
+        if($SP_TEN == "" || $danhmuc == "" || $loai_sp == "" || $SP_MOTA == "" || $SP_GIA == "" || $SP_MAU == ""
+        || $SP_TRANGTHAI == "" || $SP_TINHTRANG == ""){
             $alert = "<span class='error'> Các thành phần này không được trống!!!</span>";
             return $alert;
         }else{
@@ -96,14 +102,14 @@ class product
                     return $alert;
                 }
                 $query = "UPDATE sanpham SET 
-                SP_TEN = '$SP_TEN', DMSP_MA = '$danhmuc', LSP_MA = '$loai_sp', SP_GIA = '$SP_GIA', 
-                SP_TRANGTHAI = 'SP_TRANGTHAI', SP_HINHANH = '$unique_image'
+                SP_TEN = '$SP_TEN', DMSP_MA = '$danhmuc', LSP_MA = '$loai_sp', SP_MOTA = '$SP_MOTA', SP_GIA = '$SP_GIA', 
+                SP_MAU = '$SP_MAU', SP_TRANGTHAI = '$SP_TRANGTHAI', SP_TINHTRANG = '$SP_TINHTRANG', SP_HINHANH = '$unique_image'
                 WHERE SP_MA = '$id'";
             }else{
                 //Không chọn ảnh
                 $query = "UPDATE sanpham SET 
-                SP_TEN = '$SP_TEN', DMSP_MA = '$danhmuc', LSP_MA = '$loai_sp', SP_GIA = '$SP_GIA', 
-                SP_TRANGTHAI = '$SP_TRANGTHAI'
+                SP_TEN = '$SP_TEN', DMSP_MA = '$danhmuc', LSP_MA = '$loai_sp', SP_MOTA = '$SP_MOTA', SP_GIA = '$SP_GIA', 
+                SP_MAU = '$SP_MAU', SP_TRANGTHAI = '$SP_TRANGTHAI', SP_TINHTRANG = '$SP_TINHTRANG'
                 WHERE SP_MA = '$id'";
             }
             $result = $this->db->update($query);
@@ -140,5 +146,12 @@ class product
         $result = $this->db->select($query);
         return $result;
     }
+
+    public function getproduct_new(){
+        $query = "SELECT * FROM sanpham ORDER BY SP_MA DESC LIMIT 4";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
 }
 ?>
