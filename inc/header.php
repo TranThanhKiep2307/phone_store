@@ -64,21 +64,6 @@
 	<body>
 		<!-- HEADER -->
 		<header>
-			<!-- TOP HEADER -->
-			<div id="top-header">
-				<div class="container">
-					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i> 0858 801 302</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i> kiepb2012024@student.ctu.edu.vn</a></li>
-					</ul>
-					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> VNĐ</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> Tôi</a></li>
-					</ul>
-				</div>
-			</div>
-			<!-- /TOP HEADER -->
-
 			<!-- MAIN HEADER -->
 			<div id="header">
 				<!-- container -->
@@ -164,6 +149,13 @@
 											<a href="checkout.php">Checkout<i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
+								</div>
+								<div>
+									<a href="login.php">
+										<i class="fa fa-user-o"></i>
+										<span>Tài khoản</span>
+										<!-- <div class="qty">2</div> -->
+									</a>
 								</div>
 								<!-- /Cart -->
 

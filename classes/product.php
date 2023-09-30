@@ -152,6 +152,13 @@ class product
         $result = $this->db->select($query);
         return $result;
     }
-
+    public function getproduct_details($id){
+        $query = "SELECT sanpham.*, danhmuc.DMSP_TEN, loai_sp.LSP_TEN
+        FROM sanpham INNER JOIN danhmuc ON sanpham.DMSP_MA = danhmuc.DMSP_MA
+        INNER JOIN loai_sp ON sanpham.LSP_MA = loai_sp.LSP_MA 
+        WHERE sanpham.SP_MA = '$id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
 }
 ?>
