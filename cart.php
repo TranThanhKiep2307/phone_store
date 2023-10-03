@@ -12,7 +12,12 @@ ob_start();
 		$GH_MA = $_POST['GH_MA'];
 		$GH_SOLUONG = $_POST['GH_SOLUONG'];
         $up_quantity_cart = $ct-> up_quantity_cart($GH_SOLUONG, $GH_MA);
-    }  
+    }
+ ?>
+ <?php
+	if (!isset($_GET['id'])) {
+		echo "<meta http-equiv = 'refresh' content = '0; URL=?id=live'>";
+	}
  ?>
 <style>
     table.display{
@@ -28,10 +33,10 @@ ob_start();
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="breadcrumb-header">Regular Page</h3>
+						<h3 class="breadcrumb-header">Giỏ hàng</h3>
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li class="active">Blank</li>
+							<li><a href="index.php">Trang chủ</a></li>
+							<li class="active">Giỏ hàng</li>
 						</ul>
 					</div>
 				</div>
@@ -52,14 +57,14 @@ ob_start();
         <h2>Danh sách đơn hàng</h2>
         <div class="block">  
 			<?php
-			if(isset($up_quantity_cart)){
-				echo $up_quantity_cart;
-			}
+				if(isset($up_quantity_cart)){
+					echo $up_quantity_cart;
+				}
 			?>
 			<?php
-			if(isset($delete_cart)){
-				echo $delete_cart;
-			}
+				if(isset($delete_cart)){
+					echo $delete_cart;
+				}
 			?>
             <table class="data display datatable" id="example">
 			<thead>
@@ -78,6 +83,7 @@ ob_start();
 				$getproduct_cart = $ct -> getproduct_cart();
 				if($getproduct_cart){
                     $subtotal = 0;
+					$sl = 0;
 					while($result = $getproduct_cart ->fetch_assoc()){
 			?>
 				<tr class="odd gradeX">
@@ -112,6 +118,7 @@ ob_start();
 				</tr>
 			<?php
                 $subtotal += $total;
+				$sl = $sl + $result['GH_SOLUONG'];
 				}
 			}
 			?>
@@ -124,7 +131,11 @@ ob_start();
         <table style="float:right; text-align: left;" width = "40%">
             <tr>
                 <th>Tổng đơn giá : </th>
-                <td><?php echo $subtotal?></td>
+                <td><?php 
+				echo $subtotal;
+				Session::set("sum",$subtotal);
+				Session::set("sl",$sl);
+				?></td>
             </tr>
             <tr>
                 <th>Thuế VAT : </th>
@@ -145,6 +156,11 @@ ob_start();
 		?>
        </div>
     </div>
+	<div>
+		<h4>
+		<a href="">THANH TOÁN</a>
+		</h4>
+	</div>
 </div>
 
 <script type="text/javascript">

@@ -121,7 +121,7 @@ ob_start();
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn"type="submit" class="fa fa-shopping-cart" name="submit">add to cart</button>
+								<button class="add-to-cart-btn"type="submit" class="fa fa-shopping-cart" name="submit">Mua ngay</button>
 								</form>
 								<?php
 								if(isset($addcart)){

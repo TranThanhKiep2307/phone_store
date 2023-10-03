@@ -58,8 +58,7 @@ class cart
                 
         $result = $this->db->update($query);
         if($result){
-            $thbao = "<span class = 'success'>Cập nhật số lượng sản phẩm thành công</span>";
-            return $thbao;
+            header('Location:cart.php');
         }else{
             $thbao = "<span class = 'error'>Cập nhật số lượng sản phẩm thất bại</span>";
             return $thbao;
@@ -80,6 +79,12 @@ class cart
     public function check_cart(){
         $GH_MASS = session_id();
         $query = "SELECT * FROM giohang WHERE GH_MASS = '$GH_MASS'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function del_all_cart(){
+        $GH_MASS = session_id();
+        $query = "DELETE FROM giohang WHERE GH_MASS = '$GH_MASS'";
         $result = $this->db->select($query);
         return $result;
     }

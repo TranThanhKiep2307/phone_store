@@ -57,7 +57,10 @@ $activate = "index";
 												</div>
 											</div>
 											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+												<button class="add-to-cart-btn">
+													<i class="fa fa-shopping-cart"></i>
+													<a href="details.php?proid=<?php echo $result_new['SP_MA'] ?>">Mua ngay</a>
+												</button>
 											</div>
 										</div>
 										<!-- /product -->

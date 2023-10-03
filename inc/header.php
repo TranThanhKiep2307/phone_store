@@ -15,6 +15,7 @@
 	$fm = new Format();
 	$ct = new cart();
 	$us = new user();
+	$cs = new customers();
 	$cat = new category();
 	$product = new product();
 ?>
@@ -90,7 +91,7 @@
 										<option value="1">Category 02</option>
 									</select>
 									<input class="input" placeholder="Gõ những gì bạn cần...">
-									<button class="search-btn">Tìm kiếm</button>
+									<button class="search-btn" ><a href="store.php">Tìm kiếm</button></a>
 								</form>
 							</div>
 						</div>
@@ -114,49 +115,103 @@
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Giỏ hàng</span>
-										<div class="qty">3</div>
+										<div class="qty">
+										<?php 
+												$check_cart = $ct->check_cart();
+												if($check_cart){
+													$sl = Session::get("sl");
+													echo $sl;
+												}else{
+													echo 0;
+												}	
+											?>
+										</div>
 									</a>
 									<div class="cart-dropdown">
 										<div class="cart-list">
+										<?php
+											$getproduct_cart = $ct -> getproduct_cart();
+											if($getproduct_cart){
+												$subtotal = 0;
+												$sl = 0;
+												while($result = $getproduct_cart ->fetch_assoc()){
+										?>
 											<div class="product-widget">
 												<div class="product-img">
-													<img src="./img/product01.png" alt="">
+													<img src="admin/uploads/<?php echo $result['SP_HINHANH']?>" alt="">
 												</div>
 												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+													<h3 class="product-name"><a href="#"><?php echo $result['SP_TEN']?></a></h3>
+													<h4 class="product-price">
+														<span class="qty"><?php echo 'x'.$result['GH_SOLUONG']?>
+														</span><?php $check_cart = $ct->check_cart();
+															if($check_cart){
+																$sum = Session::get("sum");
+																echo $sum;}
+																?>
+													</h4>
 												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
+												<!-- <button class="delete"><i class="fa fa-close"></i></button> -->
 											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product02.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
+											<?php
+												}
+											}
+											?>
 										</div>
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
+											<small>
+											<?php 
+												$check_cart = $ct->check_cart();
+												if($check_cart){
+													$sl = Session::get("sl");
+													echo $sl.' '.'sản phẩm được chọn';
+												}else{
+													echo 'Không có sản phẩm';
+												}	
+											?>
+											</small>
+											<h5> 
+											<?php 
+												$check_cart = $ct->check_cart();
+												if($check_cart){
+													$sum = Session::get("sum");
+													echo 'Tổng tiền:'.' '.$sum.' '.'VNĐ';
+												}else{
+													echo 'Giỏ hàng rỗng';
+												}
+												
+											?>
+											</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="cart.php">View Cart</a>
-											<a href="checkout.php">Checkout<i class="fa fa-arrow-circle-right"></i></a>
+											<a href="cart.php">Xem giỏ hàng</a>
+											<a href="checkout.php">Thanh toán<i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
+								<?php
+									if(isset($_GET['customer_id'])){
+										$del_cart = $ct->del_all_cart();
+										Session::destroy();
+									}
+								?>
 								<div>
-									<a href="login.php">
-										<i class="fa fa-user-o"></i>
-										<span>Tài khoản</span>
-										<!-- <div class="qty">2</div> -->
+								<?php 
+								$login_check = Session::get('customer_login'); 
+								if($login_check==false){ 
+									echo '<a href="login.php">
+									<i class="fa fa-user-o"></i>
+									<span>Đăng nhập</span>
 									</a>
-								</div>
+									</div>'; 
+								}else{ 
+									echo '<a href="?customer_id='.Session::get('customer_id').'">
+									<i class="fa fa-user-o"></i>
+									<span>Đăng xuất</span>
+									</a>
+									</div>'; 
+								}	
+								?>
 								<!-- /Cart -->
 
 								<!-- Menu Toogle -->
@@ -189,7 +244,7 @@
 						<li class="<?php echo ($activate == "index" ? "active" : "")?>"> <a href="index.php">Trang chủ</a></li>
 						<li class="<?php echo ($activate == "phone" ? "active" : "")?>"><a href="phone.php">Điện thoại</a></li>
 						<li class="<?php echo ($activate == "accessories" ? "active" : "")?>"><a href="accessories.php">Phụ kiện</a></li>
-					</ul>
+					</ul>				
 					<!-- /NAV -->
 				</div>
 				<!-- /responsive-nav -->

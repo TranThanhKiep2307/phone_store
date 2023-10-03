@@ -1,6 +1,13 @@
 <?php
 $activate = "checkout";
+ob_start();
 @include('inc/header.php');
+?>
+<?php
+	$login_check = Session::get('customer_login'); 
+	if($login_check==false){ 
+	header('Location:login.php'); 
+	}	
 ?>
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">

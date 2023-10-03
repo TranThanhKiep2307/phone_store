@@ -1,29 +1,43 @@
 <?php 
 $activate = "login";
+ob_start();
 @include('inc/header.php');
 ?>
 <link rel="stylesheet" href="css/login.css">
-<script src="js/login.js"></script>          
+<script src="js/login.js"></script>
+<?php
+   $login_check = Session::get('customer_login'); 
+   if($login_check){ 
+      header('Location:checkout.php'); 
+   }	
+?>
+<?php 
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+        $login_customers = $cs->login_customers($_POST);
+    }   
+?>          
 <main>                                
-        <form class="form" onsubmit="return checkformsignup(this)"  action="addlist.php">
+        <form class="form" action="" method="POST">
             <h2 class="title ">ĐĂNG NHẬP</h2>
-                    
-                      <input class="form__input" type="text" placeholder="Username" id="US_NAME" >
-                      <!-- <input class="form__input" type="text" placeholder="Email" id="email"> -->
-                      <input class="form__input" type="password" placeholder="Password" id="password">
-                      <!-- <input class="form__input" type="password" placeholder="Nhập lại Password" id="password"> -->
+            <?php
+						if(isset($login_customers)){
+                     echo $login_customers;
+                  }
+					?>     
+                     <input class="form__input" type="text" name="KH_TEN" placeholder="Tên tài khoản"  >
+                     <input class="form__input" type="password" name="KH_PASSWORD" placeholder="Mật khẩu" >
                      <div>
                         <i>Chưa có tài khoản???</i>
-                        <a href="register.php">Đăng ký</a>
+                        <a class="buttonlogin" href="register.php">Đăng ký</a>
                         <style>
-                           a{
+                           a.buttonlogin{
                               color: #D10024;
                               text-decoration:underline;
                               font-weight: bold;
                            }
                         </style>
                      </div>
-                    <button type="submit" class="form__button ">ĐĂNG NHẬP</button>                                      
+                    <button type="submit" name="submit" class="form__button ">ĐĂNG NHẬP</button>                                      
         </form>
         <br/>
         <br/>
