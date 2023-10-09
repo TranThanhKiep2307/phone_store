@@ -88,5 +88,26 @@ class cart
         $result = $this->db->select($query);
         return $result;
     }
+    public function insert_order($KH_MA){
+        $GH_MASS =  session_id();
+        $query = "SELECT * FROM giohang WHERE GH_MASS = '$GH_MASS'";
+        $get_product = $this->db->select($query);
+        if($get_product){
+            while($result = $get_product->fetch_assoc()){
+                $SP_MA = $result['SP_MA'];
+                $SP_TEN = $result['SP_TEN'];
+                $GH_SOLUONG = $result['GH_SOLUONG'];
+                $SP_GIA = $result['SP_GIA'] * $GH_SOLUONG;
+                $HD_GHICHU = $result['HD_GHICHU'];
+                $KH_MA = $KH_MA;
+                
+                $query_order = "INSERT INTO hoadon(SP_MA, SP_TEN, GH_SOLUONG, SP_GIA, HD_GHICHU, KH_MA) 
+                VALUES ('$SP_MA','$SP_TEN','$GH_SOLUONG','$SP_GIA','$HD_GHICHU','$KH_MA')";
+                $insert_order = $this->db->insert($query_order);
+
+
+            }
+        }
+    }
 }
 ?>

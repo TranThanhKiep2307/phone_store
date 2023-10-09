@@ -51,14 +51,14 @@ class customers
         if($KH_TEN == "" || $KH_PASSWORD == ""){
             $alert = "<span class='error'>Tên hoặc mật khẩu không được trống!!!</span>";
             return $alert;
-        }else{
+        }else{ 
             $check_login = "SELECT * FROM khachhang WHERE KH_TEN = '$KH_TEN' AND KH_PASSWORD = '$KH_PASSWORD'";
             $result_check = $this->db->select($check_login);
             if($result_check){
                 $value = $result_check ->fetch_assoc();
                 Session::set('customer_login',true);
-                Session::set('customer_id',$value['KH_TEN']);
-                Session::set('customer_password',$value['KH_PASSWORD']);
+                Session::set('customer_id',$value['KH_MA']);
+                Session::set('customer_ten',$value['KH_TEN']);
                 header('Location:checkout.php');
             }else{
                 $alert = "<span class='error'>Tên hoặc mật khẩu không đúng!!!</span>";
@@ -66,5 +66,42 @@ class customers
             }
         }
     }
+    public function show_customers($id){
+        $query = "SELECT * FROM khachhang WHERE KH_MA ='$id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function update_customers($data, $id){
+        $KH_TEN = mysqli_real_escape_string($this->db->link, $data['KH_TEN']);
+        $KH_SDT = mysqli_real_escape_string($this->db->link, $data['KH_SDT']);
+        $KH_EMAIL = mysqli_real_escape_string($this->db->link, $data['KH_EMAIL']);
+        $KH_DIACHI = mysqli_real_escape_string($this->db->link, $data['KH_DIACHI']);
+        $KH_PASSWORD = mysqli_real_escape_string($this->db->link, md5($data['KH_PASSWORD']));
+
+        if($KH_TEN == "" || $KH_SDT == "" || $KH_EMAIL == "" || $KH_DIACHI == ""){
+            $alert = "<span class='error'>Các thành phần này không được trống!!!</span>";
+            return $alert;
+        }else{
+            if($KH_PASSWORD){
+                $query = "UPDATE khachhang SET KH_TEN = '$KH_TEN', KH_SDT = '$KH_SDT', KH_EMAIL = '$KH_EMAIL', 
+                KH_DIACHI = '$KH_DIACHI', KH_PASSWORD = '$KH_PASSWORD'
+                WHERE KH_MA = '$id'";
+                $result = $this->db->update($query);
+            }
+            else{
+                $query = "UPDATE khachhang SET KH_TEN = '$KH_TEN', KH_SDT = '$KH_SDT', KH_EMAIL = '$KH_EMAIL', KH_DIACHI = '$KH_DIACHI'
+                WHERE KH_MA = '$id'";   
+                }
+                    $result = $this->db->update($query);
+                    if($result){
+                        $alert = "<span class='success'> Cập nhật thông tin thành công!</span>";
+                        return $alert; 
+                    }else{
+                        $alert = "<span class='error'> Cập nhật thông tin thất bại!!!</span>";
+                        return $alert; 
+                    }
+            }
+        
+        }
 }
 ?>

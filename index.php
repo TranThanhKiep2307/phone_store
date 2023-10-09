@@ -45,7 +45,7 @@ $activate = "index";
 												</div>
 											</div>
 											<div class="product-body">
-											<p class="product-category"><?php echo $result_new['DMSP_MA']?></p>
+											<p class="product-category"><?php echo $result_new['DMSP_TEN']?></p>
 												<h3 class="product-name"><?php echo $result_new['SP_TEN']?></h3>
 												<h4 class="product-price">980.00 VNĐ <del class="product-old-price"><?php echo $result_new['SP_GIA']." "."VNĐ"?></del></h4>
 												<div class="product-rating">
@@ -91,7 +91,7 @@ $activate = "index";
 				<div class="row">
 					<div class="col-md-12">
 						<div class="hot-deal">
-							<ul class="hot-deal-countdown">
+							<ul class="hot-deal-countdown" data-datetime = " 2023-10-10 00:00 + 00:00"> 
 								<li>
 									<div>
 										<h3>02</h3>
@@ -174,7 +174,7 @@ $activate = "index";
 											</div>
 											<div class="product-body">
 												
-												<p class="product-category"><?php echo $result['DMSP_MA']?></p>
+												<p class="product-category"><?php echo $result['DMSP_TEN']?></p>
 												<h3 class="product-name"><?php echo $result['SP_TEN']?></h3>
 												<h4 class="product-price">980.00 VNĐ <del class="product-old-price"><?php echo $result['SP_GIA']." "."VNĐ"?></del></h4>
 												<div class="product-rating">
@@ -187,7 +187,10 @@ $activate = "index";
 												
 											</div>
 											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+												<button class="add-to-cart-btn">
+												<i class="fa fa-shopping-cart"></i>
+												<a href="details.php?proid=<?php echo $result['SP_MA'] ?>">Mua ngay</a>
+											</button>
 											</div>
 										</div>
 										<!-- /product -->	

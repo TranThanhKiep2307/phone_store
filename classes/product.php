@@ -142,13 +142,17 @@ class product
 
     //end back-end
     public function getproduct_feathered(){
-        $query = "SELECT * FROM sanpham WHERE SP_TRANGTHAI = '0'";
+        $query = "SELECT sanpham.*, danhmuc.DMSP_TEN
+        FROM sanpham INNER JOIN danhmuc ON sanpham.DMSP_MA = danhmuc.DMSP_MA  
+        WHERE SP_TRANGTHAI = '0'";
         $result = $this->db->select($query);
         return $result;
     }
 
     public function getproduct_new(){
-        $query = "SELECT * FROM sanpham ORDER BY SP_MA DESC LIMIT 4";
+        $query = "SELECT sanpham.*, danhmuc.DMSP_TEN
+        FROM sanpham INNER JOIN danhmuc ON sanpham.DMSP_MA = danhmuc.DMSP_MA 
+        order by sanpham.SP_MA DESC LIMIT 4";
         $result = $this->db->select($query);
         return $result;
     }

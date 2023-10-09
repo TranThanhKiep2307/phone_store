@@ -4,6 +4,15 @@ ob_start();
 @include('inc/header.php');
 ?>
 <?php
+    if (isset($_GET['orderid']) && $_GET['orderid']=='order') {
+        $KH_MA = Session::get('custumer_id');
+		$insert_order = $ct -> insert_order($KH_MA);
+		$delete_cart = $ct -> delete_cart($GH_MA);
+		header('Location:success.php');
+    }
+ ?> 
+
+<?php
 	$login_check = Session::get('customer_login'); 
 	if($login_check==false){ 
 	header('Location:login.php'); 
@@ -18,7 +27,7 @@ ob_start();
 					<div class="col-md-12">
 						<h3 class="breadcrumb-header">Checkout</h3>
 						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
+							<li><a href="index.php">Home</a></li>
 							<li class="active">Checkout</li>
 						</ul>
 					</div>
@@ -40,92 +49,36 @@ ob_start();
 						<!-- Billing Details -->
 						<div class="billing-details">
 							<div class="section-title">
-								<h3 class="title">Billing address</h3>
+								<h3 class="title">Địa chỉ của bạn</h3>
+							</div>
+							<?php
+								$id = Session::get('customer_id');
+								$get_customers = $cs->show_customers($id);
+								if ($get_customers){
+									while($result = $get_customers->fetch_assoc()){ 
+								?>
+							<div class="form-group">
+								<input class="input" type="text" name="KH_TEN" placeholder="<?php echo $result['KH_TEN']?>">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="First Name">
+								<input class="input" type="email" name="KH_EMAIL" placeholder="<?php echo $result['KH_EMAIL']?>">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Last Name">
+								<input class="input" type="text" name="KH_DIACHI" placeholder="<?php echo $result['KH_DIACHI']?>">
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
+								<input class="input" type="tel" name="KH_SDT" placeholder="<?php echo $result['KH_SDT']?>">
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone">
-							</div>
-							<div class="form-group">
-								<div class="input-checkbox">
-									<input type="checkbox" id="create-account">
-									<label for="create-account">
-										<span></span>
-										Create Account?
-									</label>
-									<div class="caption">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-										<input class="input" type="password" name="password" placeholder="Enter Your Password">
-									</div>
-								</div>
-							</div>
+							<?php
+									}
+								}
+							?>
 						</div>
 						<!-- /Billing Details -->
-
-						<!-- Shiping Details -->
-						<div class="shiping-details">
-							<div class="section-title">
-								<h3 class="title">Shiping address</h3>
-							</div>
-							<div class="input-checkbox">
-								<input type="checkbox" id="shiping-address">
-								<label for="shiping-address">
-									<span></span>
-									Ship to a diffrent address?
-								</label>
-								<div class="caption">
-									<div class="form-group">
-										<input class="input" type="text" name="first-name" placeholder="First Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="last-name" placeholder="Last Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="email" name="email" placeholder="Email">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="address" placeholder="Address">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="city" placeholder="City">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="country" placeholder="Country">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-									</div>
-									<div class="form-group">
-										<input class="input" type="tel" name="tel" placeholder="Telephone">
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /Shiping Details -->
-
+						
 						<!-- Order notes -->
 						<div class="order-notes">
-							<textarea class="input" placeholder="Order Notes"></textarea>
+							<textarea class="input" placeholder="Ghi chú cho chúng tôi"></textarea>
 						</div>
 						<!-- /Order notes -->
 					</div>
@@ -133,30 +86,74 @@ ob_start();
 					<!-- Order Details -->
 					<div class="col-md-5 order-details">
 						<div class="section-title text-center">
-							<h3 class="title">Your Order</h3>
+							<h3 class="title">Đơn hàng của bạn</h3>
 						</div>
 						<div class="order-summary">
 							<div class="order-col">
-								<div><strong>PRODUCT</strong></div>
-								<div><strong>TOTAL</strong></div>
+								<div><strong>Sản phẩm</strong></div>
+								<div><strong>Giá</strong></div>
 							</div>
+							<?php 
+								$getproduct_cart = $ct -> getproduct_cart();
+								if($getproduct_cart){
+									$subtotal = 0;
+									$sl = 0;
+									while($result = $getproduct_cart ->fetch_assoc()){
+							?>
 							<div class="order-products">
 								<div class="order-col">
-									<div>1x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
-								<div class="order-col">
-									<div>2x Product Name Goes Here</div>
-									<div>$980.00</div>
+									<div><?php echo $result['GH_SOLUONG']."x"." "?><?php echo $result['SP_TEN']?></div>
+									<div><?php 
+									$total = $result['SP_GIA'] * $result['GH_SOLUONG'];
+                    				echo $total.' '.'VNĐ'?></div>
+									
 								</div>
 							</div>
+							<?php
+								$subtotal += $total;
+								$sl = $sl + $result['GH_SOLUONG'];
+								}
+							}
+							?>
+
 							<div class="order-col">
-								<div>Shiping</div>
-								<div><strong>FREE</strong></div>
+								<?php
+									$check_cart = $ct->check_cart();
+									if($check_cart){
+										echo '<div><strong>Tổng đơn hàng</strong></div>
+										<div><strong> '.$subtotal.' '.'VNĐ</strong></div>';
+											Session::set("sum",$subtotal);
+											Session::set("sl",$sl);
+									}else{
+										echo '';
+									}
+								?>
+								
 							</div>
 							<div class="order-col">
-								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
+								<?php
+								$check_cart = $ct->check_cart();
+								if ($check_cart) {
+									$vat = $subtotal * 0.1; // Calculate the tax (10% of subtotal)
+									echo '<div>Thuế</div>
+										  <div><strong>' . number_format($vat) . ' VNĐ</strong></div>';
+								} else {
+									echo '';
+								}
+								?>
+							</div>
+							<div class="order-col">
+								<?php
+									$check_cart = $ct->check_cart();
+									if ($check_cart) {
+										$vat = $subtotal * 0.1;
+										$gtotal = $subtotal + $vat;
+										echo '<div><strong>Tổng đơn hàng gồm thuế</strong></div>
+											<div><strong class="order-total">' . number_format($gtotal) . ' VNĐ</strong></div>';
+									}else{
+										echo 'Giỏ hàng trống! Hãy đặt hàng <3';
+									}
+								?>
 							</div>
 						</div>
 						<div class="payment-method">
@@ -164,30 +161,20 @@ ob_start();
 								<input type="radio" name="payment" id="payment-1">
 								<label for="payment-1">
 									<span></span>
-									Direct Bank Transfer
+									Thanh toán khi nhận hàng
 								</label>
 								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+									<p>Chúng tôi sẽ sớm liên hệ với bạn!!!</p>
 								</div>
 							</div>
 							<div class="input-radio">
 								<input type="radio" name="payment" id="payment-2">
 								<label for="payment-2">
 									<span></span>
-									Cheque Payment
+									Chuyển khoản
 								</label>
 								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-3">
-								<label for="payment-3">
-									<span></span>
-									Paypal System
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+									<p>Hãy chuyển khoản 50% vào STK: xxxxxxxxxxxx</p>
 								</div>
 							</div>
 						</div>
@@ -195,10 +182,10 @@ ob_start();
 							<input type="checkbox" id="terms">
 							<label for="terms">
 								<span></span>
-								I've read and accept the <a href="#">terms & conditions</a>
+								Tôi đã đọc và chấp nhận <a href="#">điều khoản và điều kiện</a>
 							</label>
 						</div>
-						<a href="#" class="primary-btn order-submit">Place order</a>
+						<a href="?orderid=order" class="primary-btn order-submit">Đặt hàng</a>
 					</div>
 					<!-- /Order Details -->
 				</div>

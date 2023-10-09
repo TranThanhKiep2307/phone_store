@@ -1,5 +1,5 @@
 <?php
-$activate = 'phone';
+$activate = 'cart';
 ob_start();
 @include('inc/header.php');
 ?>

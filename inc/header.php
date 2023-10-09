@@ -112,7 +112,7 @@
 
 								<!-- Cart -->
 								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a class="dropdown-toggle" data-toggle="dropdown" href="" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Giỏ hàng</span>
 										<div class="qty">
@@ -144,11 +144,9 @@
 													<h3 class="product-name"><a href="#"><?php echo $result['SP_TEN']?></a></h3>
 													<h4 class="product-price">
 														<span class="qty"><?php echo 'x'.$result['GH_SOLUONG']?>
-														</span><?php $check_cart = $ct->check_cart();
-															if($check_cart){
-																$sum = Session::get("sum");
-																echo $sum;}
-																?>
+														</span><?php 
+															$total = $result['SP_GIA'] * $result['GH_SOLUONG'];
+                    										echo $total ?>
 													</h4>
 												</div>
 												<!-- <button class="delete"><i class="fa fa-close"></i></button> -->
@@ -205,9 +203,10 @@
 									</a>
 									</div>'; 
 								}else{ 
-									echo '<a href="?customer_id='.Session::get('customer_id').'">
+									echo '<a class= "dropdown" href="?customer_id='.Session::get('customer_id').'">
 									<i class="fa fa-user-o"></i>
-									<span>Đăng xuất</span>
+									<span>Xin chào '.Session::get('customer_ten').'</span>
+									<i class="fa fa-arrow-circle-right">Đăng xuất</i>
 									</a>
 									</div>'; 
 								}	
@@ -244,6 +243,25 @@
 						<li class="<?php echo ($activate == "index" ? "active" : "")?>"> <a href="index.php">Trang chủ</a></li>
 						<li class="<?php echo ($activate == "phone" ? "active" : "")?>"><a href="phone.php">Điện thoại</a></li>
 						<li class="<?php echo ($activate == "accessories" ? "active" : "")?>"><a href="accessories.php">Phụ kiện</a></li>
+						<?php
+							$check_cart = $ct->check_cart();
+							if($check_cart==true){
+								echo '<li class="'.($activate == "cart" ? "active" : "").'"><a href="cart.php">Giỏ hàng</a></li>';
+							}else{
+								echo '';
+							}
+						?>
+						<?php
+							$login_check = Session::get('customer_login');
+							if($login_check==false){
+								echo '';
+							}else{
+								echo '<li class="'.($activate == "profile" ? "active" : "").'"><a href="profile.php">Tài khoản</a></li>';
+							}
+						?>
+
+						
+						
 					</ul>				
 					<!-- /NAV -->
 				</div>
