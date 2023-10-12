@@ -158,7 +158,7 @@ ob_start();
     </div>
 	<div>
 		<h4>
-		<a href="">THANH TOÁN</a>
+		<a href="checkout.php">THANH TOÁN</a>
 		</h4>
 	</div>
 </div>

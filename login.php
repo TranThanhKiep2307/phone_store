@@ -24,7 +24,7 @@ ob_start();
                      echo $login_customers;
                   }
 					?>     
-                     <input class="form__input" type="text" name="KH_TEN" placeholder="Tên tài khoản"  >
+                     <input class="form__input" type="text" name="KH_EMAIL" placeholder="Email"  >
                      <input class="form__input" type="password" name="KH_PASSWORD" placeholder="Mật khẩu" >
                      <div>
                         <i>Chưa có tài khoản???</i>

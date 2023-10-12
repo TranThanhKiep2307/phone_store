@@ -20,15 +20,18 @@
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
 								<h3 class="footer-title">Các dòng điện thoại</h3>
+								<?php
+									$brand_show = $br -> show_brand();
+									if($brand_show){
+										while($result = $brand_show ->fetch_assoc()){
+								?>
 								<ul class="footer-links">
-								<li><a href="#">Samsung</a></li>
-								<li><a href="#">Iphone</a></li>
-								<li><a href="#">Oppo</a></li>
-								<li><a href="#">Xiaomi</a></li>
-								<li><a href="#">Vivo</a></li>
-								<li><a href="#">Realme</a></li>
-								<li><a href="#">Nokia</a></li>		
+								<li><a href="#"><?php echo $result['LSP_TEN']?></a></li>	
 								</ul>
+								<?php
+									}
+								}
+								?>
 							</div>
 						</div>
 

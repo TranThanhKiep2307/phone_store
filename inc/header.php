@@ -18,6 +18,7 @@
 	$cs = new customers();
 	$cat = new category();
 	$product = new product();
+	$br = new brand();
 ?>
 <?php
   header("Cache-Control: no-cache, must-revalidate");
@@ -86,12 +87,21 @@
 							<div class="header-search">
 								<form>
 									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">Category 01</option>
-										<option value="1">Category 02</option>
+										<option value="0">Sản phẩm</option>
+										<?php
+											$brand_show = $br -> show_brand();
+											if($brand_show){
+												while($result = $brand_show ->fetch_assoc()){
+										?>
+										<option value="1"><?php echo $result['LSP_TEN']?></option>
+										
+										<?php
+												}
+											}
+										?>
 									</select>
 									<input class="input" placeholder="Gõ những gì bạn cần...">
-									<button class="search-btn" ><a href="store.php">Tìm kiếm</button></a>
+									<button class="search-btn" ><a href="store.php?brandid=brand">Tìm kiếm</button></a>
 								</form>
 							</div>
 						</div>

@@ -33,6 +33,7 @@ class adminlogin
             if($result != false){
                 $value = $result->fetch_assoc();
                 session::set('adminlogin', true);
+                
                 session::set('AD_id',$value['AD_id']);
                 session::set('AD_username',$value['AD_username']);
                 session::set('AD_ten',$value['AD_ten']);

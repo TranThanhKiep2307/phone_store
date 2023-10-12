@@ -5,8 +5,9 @@ ob_start();
 ?>
 <?php
     if (isset($_GET['orderid']) && $_GET['orderid']=='order') {
-        $KH_MA = Session::get('custumer_id');
-		$insert_order = $ct -> insert_order($KH_MA);
+        $id = Session::get('custumer_id');
+		$get_customers = $cs->get_customersid($id);
+		$insert_order = $ct -> insert_order($id);
 		$delete_cart = $ct -> delete_cart($GH_MA);
 		header('Location:success.php');
     }
@@ -44,6 +45,11 @@ ob_start();
 			<div class="container">
 				<!-- row -->
 				<div class="row">
+				<?php 
+                if(isset($insert_order)){
+                    echo $insert_order;
+                }
+                ?>
 
 					<div class="col-md-7">
 						<!-- Billing Details -->
@@ -58,6 +64,9 @@ ob_start();
 									while($result = $get_customers->fetch_assoc()){ 
 								?>
 							<div class="form-group">
+								<input class="input" type="text" name="KH_MA" placeholder="<?php echo $id?>">
+							</div>
+							<div class="form-group">
 								<input class="input" type="text" name="KH_TEN" placeholder="<?php echo $result['KH_TEN']?>">
 							</div>
 							<div class="form-group">
@@ -69,17 +78,18 @@ ob_start();
 							<div class="form-group">
 								<input class="input" type="tel" name="KH_SDT" placeholder="<?php echo $result['KH_SDT']?>">
 							</div>
-							<?php
-									}
-								}
-							?>
+							
 						</div>
 						<!-- /Billing Details -->
 						
 						<!-- Order notes -->
 						<div class="order-notes">
-							<textarea class="input" placeholder="Ghi chú cho chúng tôi"></textarea>
+							<textarea class="input" type="text" name="HD_GHICHU" placeholder="Ghi chú cho chúng tôi"></textarea>
 						</div>
+						<?php
+									}
+								}
+							?>
 						<!-- /Order notes -->
 					</div>
 
@@ -105,7 +115,7 @@ ob_start();
 									<div><?php echo $result['GH_SOLUONG']."x"." "?><?php echo $result['SP_TEN']?></div>
 									<div><?php 
 									$total = $result['SP_GIA'] * $result['GH_SOLUONG'];
-                    				echo $total.' '.'VNĐ'?></div>
+                    				echo number_format($total).' '.'VNĐ'?></div>
 									
 								</div>
 							</div>
@@ -121,7 +131,7 @@ ob_start();
 									$check_cart = $ct->check_cart();
 									if($check_cart){
 										echo '<div><strong>Tổng đơn hàng</strong></div>
-										<div><strong> '.$subtotal.' '.'VNĐ</strong></div>';
+										<div><strong> '. number_format($subtotal) . ' '.'VNĐ</strong></div>';
 											Session::set("sum",$subtotal);
 											Session::set("sl",$sl);
 									}else{
@@ -134,7 +144,7 @@ ob_start();
 								<?php
 								$check_cart = $ct->check_cart();
 								if ($check_cart) {
-									$vat = $subtotal * 0.1; // Calculate the tax (10% of subtotal)
+									$vat = $subtotal * 0.1;
 									echo '<div>Thuế</div>
 										  <div><strong>' . number_format($vat) . ' VNĐ</strong></div>';
 								} else {

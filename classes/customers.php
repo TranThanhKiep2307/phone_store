@@ -45,14 +45,14 @@ class customers
         }
     }
     public function login_customers($data){
-        $KH_TEN = mysqli_real_escape_string($this->db->link, $data['KH_TEN']);
+        $KH_EMAIL = mysqli_real_escape_string($this->db->link, $data['KH_EMAIL']);
         $KH_PASSWORD = mysqli_real_escape_string($this->db->link, md5($data['KH_PASSWORD']));
 
-        if($KH_TEN == "" || $KH_PASSWORD == ""){
+        if($KH_EMAIL == "" || $KH_PASSWORD == ""){
             $alert = "<span class='error'>Tên hoặc mật khẩu không được trống!!!</span>";
             return $alert;
         }else{ 
-            $check_login = "SELECT * FROM khachhang WHERE KH_TEN = '$KH_TEN' AND KH_PASSWORD = '$KH_PASSWORD'";
+            $check_login = "SELECT * FROM khachhang WHERE KH_EMAIL = '$KH_EMAIL' AND KH_PASSWORD = '$KH_PASSWORD'";
             $result_check = $this->db->select($check_login);
             if($result_check){
                 $value = $result_check ->fetch_assoc();
@@ -102,6 +102,11 @@ class customers
                     }
             }
         
+        }
+        public function get_customersid($id){
+            $query = "SELECT * FROM khachhang WHERE KH_MA ='$id'";
+            $result = $this->db->select($query);
+            return $result;
         }
 }
 ?>

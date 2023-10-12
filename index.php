@@ -32,8 +32,7 @@ $activate = "index";
 									<?php
 										$product_new = $product -> getproduct_new();
 										if($product_new){
-											while($result_new = $product_new->fetch_assoc()){
-													
+											while($result_new = $product_new->fetch_assoc()){			
 									?>
 										<!-- product -->
 										<div class="product">
