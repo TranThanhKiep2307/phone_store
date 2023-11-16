@@ -88,28 +88,67 @@ class cart
         $result = $this->db->select($query);
         return $result;
     }
-    public function insert_order($id){
+    public function insert_order($id, $HD_GHICHU) {
+
         $id = mysqli_real_escape_string($this->db->link, $id);
-        
-        $GH_MASS =  session_id();
-        $query = "SELECT * FROM giohang WHERE GH_MASS = '$GH_MASS'";
-        $get_product = $this->db->select($query);
-        if($get_product){
-            while($result = $get_product->fetch_assoc()){
-                $SP_MA = $result["SP_MA"];
-                $SP_TEN = $result["SP_TEN"];
-                $KH_MA = $id;
-                $GH_SOLUONG = $result["GH_SOLUONG"];
-                $SP_GIA = $result["SP_GIA"] * $GH_SOLUONG;
-                $HD_GHICHU = $result["HD_GHICHU"];
-     
-                $query_order = "INSERT INTO hoadon(SP_MA, SP_TEN, KH_MA, GH_SOLUONG, SP_GIA, HD_GHICHU) 
-                VALUES ('$SP_MA','$SP_TEN','$id', '$GH_SOLUONG','$SP_GIA','$HD_GHICHU')";
-                $insert_order = $this->db->insert($query_order);
+        $HD_GHICHU = $this->fm->validation($HD_GHICHU);
+        $HD_GHICHU = mysqli_real_escape_string($this->db->link, $HD_GHICHU);
+        $GH_MASS = session_id();
+    
+        // Kiểm tra và lấy thông tin khách hàng
+        $query_kh = "SELECT * FROM khachhang WHERE KH_MA = '$id'";
+        $result_kh = $this->db->select($query_kh);
+    
+        if ($result_kh) {
+            $result_kh = $result_kh->fetch_assoc();
+            $KH_MA = $result_kh["KH_MA"];
+        } else {
+            $thbao = "<span class='error'>Khách hàng không tồn tại</span>";
+            return $thbao;
+        }
+    
+        // Kiểm tra và lấy thông tin sản phẩm từ giỏ hàng
+        $query_sp = "SELECT * FROM giohang WHERE GH_MASS = '$GH_MASS'";
+        $get_product = $this->db->select($query_sp);
+    
+        if ($get_product) {
+            $get_product = $get_product->fetch_assoc();
+            $SP_MA = $get_product["SP_MA"];
+            $SP_TEN = $get_product["SP_TEN"];
+            $GH_SOLUONG = $get_product["GH_SOLUONG"];
+            $SP_GIA = $get_product["SP_GIA"] * $GH_SOLUONG;
+        } else {
+            $thbao = "<span class='error'>Sản phẩm không tồn tại</span>";
+            return $thbao;
+        }
+    
+        // Kiểm tra xem hóa đơn đã được thanh toán hay chưa
+        $query_giohang = "SELECT hoadon.*, giohang.* FROM hoadon 
+        JOIN giohang ON hoadon.SP_MA = giohang.SP_MA
+        WHERE hoadon.SP_MA = giohang.SP_MA";
+    
+        $check_hoadon = $this->db->select($query_giohang);
 
 
+        if ($check_hoadon) {
+            $thbao = "<span class='error'>Hóa đơn đã được thanh toán</span>";
+            return $thbao;
+        } else {
+            // Thêm hóa đơn vào CSDL
+            $query_order = "INSERT INTO hoadon(SP_MA, SP_TEN, KH_MA, GH_SOLUONG, SP_GIA, HD_GHICHU) 
+            VALUES ('$SP_MA','$SP_TEN','$KH_MA', '$GH_SOLUONG', '$SP_GIA', '$HD_GHICHU')";
+    
+            $insert_order = $this->db->insert($query_order);
+    
+            if ($insert_order) {
+                header('Location:checkout.php');
+                exit;
+            } else {
+                $thbao = "<span class='error'>Thanh toán thất bại</span>";
+                return $thbao;
             }
         }
     }
+    
 }
 ?>

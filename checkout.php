@@ -4,12 +4,13 @@ ob_start();
 @include('inc/header.php');
 ?>
 <?php
-    if (isset($_GET['orderid']) && $_GET['orderid']=='order') {
+    if (isset($_GET['orderid']) && $_GET['orderid']=='order' || $_POST['GH_GHICHU']) {
         $id = Session::get('custumer_id');
-		$get_customers = $cs->get_customersid($id);
-		$insert_order = $ct -> insert_order($id);
+		$HD_GHICHU = $_POST['HD_GHICHU'];
+		$get_customers = $cs-> get_customersid($id);
+		$insert_order = $ct -> insert_order($id, $HD_GHICHU);
 		$delete_cart = $ct -> delete_cart($GH_MA);
-		header('Location:success.php');
+		header('Location:checkout.php');
     }
  ?> 
 
@@ -43,14 +44,14 @@ ob_start();
 		<div class="section">
 			<!-- container -->
 			<div class="container">
+			
 				<!-- row -->
 				<div class="row">
-				<?php 
-                if(isset($insert_order)){
-                    echo $insert_order;
-                }
-                ?>
-
+					<?php 
+						if(isset($insert_order)){
+							echo $insert_order;
+						}
+					?>
 					<div class="col-md-7">
 						<!-- Billing Details -->
 						<div class="billing-details">
@@ -64,21 +65,17 @@ ob_start();
 									while($result = $get_customers->fetch_assoc()){ 
 								?>
 							<div class="form-group">
-								<input class="input" type="text" name="KH_MA" placeholder="<?php echo $id?>">
+								<input class="input" type="text" name="KH_TEN" value="<?php echo $result['KH_TEN']?>">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="KH_TEN" placeholder="<?php echo $result['KH_TEN']?>">
+								<input class="input" type="email" name="KH_EMAIL" value="<?php echo $result['KH_EMAIL']?>">
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="KH_EMAIL" placeholder="<?php echo $result['KH_EMAIL']?>">
+								<input class="input" type="text" name="KH_DIACHI" value="<?php echo $result['KH_DIACHI']?>">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="KH_DIACHI" placeholder="<?php echo $result['KH_DIACHI']?>">
+								<input class="input" type="tel" name="KH_SDT" value="<?php echo $result['KH_SDT']?>">
 							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="KH_SDT" placeholder="<?php echo $result['KH_SDT']?>">
-							</div>
-							
 						</div>
 						<!-- /Billing Details -->
 						
@@ -177,16 +174,6 @@ ob_start();
 									<p>Chúng tôi sẽ sớm liên hệ với bạn!!!</p>
 								</div>
 							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-2">
-								<label for="payment-2">
-									<span></span>
-									Chuyển khoản
-								</label>
-								<div class="caption">
-									<p>Hãy chuyển khoản 50% vào STK: xxxxxxxxxxxx</p>
-								</div>
-							</div>
 						</div>
 						<div class="input-checkbox">
 							<input type="checkbox" id="terms">
@@ -195,7 +182,7 @@ ob_start();
 								Tôi đã đọc và chấp nhận <a href="#">điều khoản và điều kiện</a>
 							</label>
 						</div>
-						<a href="?orderid=order" class="primary-btn order-submit">Đặt hàng</a>
+						<a href="?orderid=order" name ="order"class="primary-btn order-submit">Đặt hàng</a>
 					</div>
 					<!-- /Order Details -->
 				</div>

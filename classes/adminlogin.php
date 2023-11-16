@@ -39,7 +39,7 @@ class adminlogin
                 session::set('AD_ten',$value['AD_ten']);
                 header('location:index.php');
             }else{
-                $alert = "Tài khoản và mật khẩu không được trống!!!";
+                $alert = "Tài khoản và mật khẩu sai!!!";
                 return $alert;
             }
         }
