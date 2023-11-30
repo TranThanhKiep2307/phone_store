@@ -14,7 +14,6 @@
 	$db = new Database();
 	$fm = new Format();
 	$ct = new cart();
-	$us = new user();
 	$cs = new customers();
 	$cat = new category();
 	$product = new product();
@@ -61,6 +60,7 @@
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		
 
     </head>
 	<body>
@@ -85,7 +85,7 @@
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
 							<div class="header-search">
-								<form>
+								<form action="phone.php" method="GET">
 									<select class="input-select">
 										<option value="0">Sản phẩm</option>
 										<?php
@@ -100,8 +100,8 @@
 											}
 										?>
 									</select>
-									<input class="input" placeholder="Gõ những gì bạn cần...">
-									<button class="search-btn" ><a href="store.php?brandid=brand">Tìm kiếm</button></a>
+									<input class="input" name="timkiem" placeholder="Gõ những gì bạn cần...">
+									<button type="submit" class="search-btn">Tìm kiếm</button>
 								</form>
 							</div>
 						</div>
@@ -111,13 +111,13 @@
 						<div class="col-md-3 clearfix">
 							<div class="header-ctn">
 								<!-- Wishlist -->
-								<div>
+								<!-- <div>
 									<a href="#">
 										<i class="fa fa-heart-o"></i>
 										<span>Yêu thích</span>
 										<div class="qty">2</div>
 									</a>
-								</div>
+								</div> -->
 								<!-- /Wishlist -->
 
 								<!-- Cart -->

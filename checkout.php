@@ -3,15 +3,12 @@ $activate = "checkout";
 ob_start();
 @include('inc/header.php');
 ?>
-<?php
-    if (isset($_GET['orderid']) && $_GET['orderid']=='order' || $_POST['GH_GHICHU']) {
-        $id = Session::get('custumer_id');
-		$HD_GHICHU = $_POST['HD_GHICHU'];
+<?php	
+	if (isset($_GET['orderid']) && $_GET['orderid']=='order') {
+        $id = Session::get('customer_id');
 		$get_customers = $cs-> get_customersid($id);
-		$insert_order = $ct -> insert_order($id, $HD_GHICHU);
-		$delete_cart = $ct -> delete_cart($GH_MA);
-		header('Location:checkout.php');
-    }
+		$insert_order = $ct -> insert_order($id);
+	}
  ?> 
 
 <?php
@@ -182,7 +179,7 @@ ob_start();
 								Tôi đã đọc và chấp nhận <a href="#">điều khoản và điều kiện</a>
 							</label>
 						</div>
-						<a href="?orderid=order" name ="order"class="primary-btn order-submit">Đặt hàng</a>
+						<a href="?orderid=order" name ="order" class="primary-btn order-submit">Đặt hàng</a>
 					</div>
 					<!-- /Order Details -->
 				</div>
