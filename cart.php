@@ -15,6 +15,12 @@ ob_start();
     }
  ?>
  <?php
+	$login_check = Session::get('customer_login'); 
+	if($login_check==false){ 
+	header('Location:login.php'); 
+	}	
+?>
+ <?php
 	if (!isset($_GET['id'])) {
 		echo "<meta http-equiv = 'refresh' content = '0; URL=?id=live'>";
 	}
@@ -88,7 +94,7 @@ ob_start();
 			?>
 				<tr class="odd gradeX">
 					<td><?php echo $result['SP_TEN']?></td>
-					<td><?php echo $result['SP_GIA']?></td>
+					<td><?php echo number_format($result['SP_GIA']).' '.'VNĐ'?></td>
 					<td><img src="admin/uploads/<?php echo $result['SP_HINHANH']?>" width="60px"></td>
                     <td><?php echo $result['SP_MAU']?></td>
 					<td>
@@ -113,7 +119,7 @@ ob_start();
                     <td><a onclick =  "return confirm ('Bạn có chắc muốn xóa không???')" href="?GH_MA=<?php echo $result['GH_MA']?>">Xóa sản phẩm</a></td>
 					<td><?php 
                     $total = $result['SP_GIA'] * $result['GH_SOLUONG'];
-                    echo $total?></td>
+                    echo number_format($total).' '.'VNĐ'?></td>
 					
 				</tr>
 			<?php
@@ -132,7 +138,7 @@ ob_start();
             <tr>
                 <th>Tổng đơn giá : </th>
                 <td><?php 
-				echo $subtotal;
+				echo number_format($subtotal).' '.'VNĐ';
 				Session::set("sum",$subtotal);
 				Session::set("sl",$sl);
 				?></td>
@@ -146,7 +152,7 @@ ob_start();
                 <td><?php 
                 $vat = $subtotal*0.1;
                 $gtotal = $subtotal + $vat;
-                echo $gtotal?></td>
+                echo number_format($gtotal).' '.'VNĐ'?></td>
             </tr>
         </table>
 		<?php

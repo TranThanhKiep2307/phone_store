@@ -61,7 +61,7 @@
 						$fm = new Format();
 						echo $fm -> textShorten($result['SP_MOTA'], 25);
 					?></td>
-					<td><?php echo $result['SP_GIA']?></td>
+					<td><?php echo number_format($result['SP_GIA'])?></td>
 					<td><img src="uploads/<?php echo $result['SP_HINHANH']?>" width="70px"></td>
 					<td><?php echo $result['SP_MAU']?></td>
 					<td><?php 

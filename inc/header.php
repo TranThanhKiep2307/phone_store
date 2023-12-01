@@ -156,7 +156,7 @@
 														<span class="qty"><?php echo 'x'.$result['GH_SOLUONG']?>
 														</span><?php 
 															$total = $result['SP_GIA'] * $result['GH_SOLUONG'];
-                    										echo $total ?>
+                    										echo number_format($total).' '.'VNĐ' ?>
 													</h4>
 												</div>
 												<!-- <button class="delete"><i class="fa fa-close"></i></button> -->
@@ -183,7 +183,7 @@
 												$check_cart = $ct->check_cart();
 												if($check_cart){
 													$sum = Session::get("sum");
-													echo 'Tổng tiền:'.' '.$sum.' '.'VNĐ';
+													echo 'Tổng tiền:'.' '.number_format($sum).' '.'VNĐ';
 												}else{
 													echo 'Giỏ hàng rỗng';
 												}

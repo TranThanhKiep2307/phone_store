@@ -101,7 +101,7 @@
                         <label>Giá gốc</label>
                     </td>
                     <td>
-                        <input type="text" value="<?php echo $result_product['SP_GIA']?>" name="SP_GIA"  class="medium" />
+                        <input type="text" value="<?php echo number_format($result_product['SP_GIA'])?>" name="SP_GIA"  class="medium" />
                     </td>
                 </tr>
             

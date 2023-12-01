@@ -90,7 +90,7 @@ ob_start();
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div> -->
 							<div>
-								<h3 class="product-price">$980.00 <del class="product-old-price"><?php echo $result_details['SP_GIA']." "."VNĐ"?></del></h3>
+								<h3 class="product-price"><?php echo number_format($result_details['SP_GIA'])." "."VNĐ"?></h3>
 								<span class="product-available">
 								<?php 
 									if($result_details['SP_TINHTRANG'] == 0){
@@ -359,20 +359,20 @@ ob_start();
 		<!-- /SECTION -->
 
 		<!-- Section -->
-		<div class="section">
+		<!-- <div class="section"> -->
 			<!-- container -->
-			<div class="container">
+			<!-- <div class="container"> -->
 				<!-- row -->
-				<div class="row">
+				<!-- <div class="row">
 
 					<div class="col-md-12">
 						<div class="section-title text-center">
 							<h3 class="title">Related Products</h3>
 						</div>
-					</div>
+					</div> -->
 
 					<!-- product -->
-					<div class="col-md-3 col-xs-6">
+					<!-- <div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
 								<img src="./img/product01.png" alt="">
@@ -396,11 +396,11 @@ ob_start();
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- /product -->
 
 					<!-- product -->
-					<div class="col-md-3 col-xs-6">
+					<!-- <div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
 								<img src="./img/product02.png" alt="">
@@ -429,13 +429,13 @@ ob_start();
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- /product -->
 
-					<div class="clearfix visible-sm visible-xs"></div>
+					<!-- <div class="clearfix visible-sm visible-xs"></div> -->
 
 					<!-- product -->
-					<div class="col-md-3 col-xs-6">
+					<!-- <div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
 								<img src="./img/product03.png" alt="">
@@ -461,11 +461,11 @@ ob_start();
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- /product -->
 
 					<!-- product -->
-					<div class="col-md-3 col-xs-6">
+					<!-- <div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
 								<img src="./img/product04.png" alt="">
@@ -486,14 +486,14 @@ ob_start();
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- /product -->
 
-				</div>
+				<!-- </div> -->
 				<!-- /row -->
-			</div>
+			<!-- </div> -->
 			<!-- /container -->
-		</div>
+		<!-- </div> -->
 		<!-- /Section -->
 
 
