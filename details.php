@@ -116,10 +116,10 @@ ob_start();
 								<div class="qty-label">
 									Số lượng
 									<div class="input-number">
-										<input type="number" name="GH_SOLUONG" value="1" min="1">
+										<input type="number" name="GH_SOLUONG" value="1" min="1" max="50">
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
-									</div>
+									</div> 
 								</div>
 								<button class="add-to-cart-btn"type="submit" class="fa fa-shopping-cart" name="submit">Mua ngay</button>
 								</form>

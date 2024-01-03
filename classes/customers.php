@@ -59,7 +59,7 @@ class customers
                 Session::set('customer_login',true);
                 Session::set('customer_id',$value['KH_MA']);
                 Session::set('customer_ten',$value['KH_TEN']);
-                header('Location:checkout.php');
+                header('Location:index.php');
             }else{
                 $alert = "<span class='error'>Tên hoặc mật khẩu không đúng!!!</span>";
             return $alert;
