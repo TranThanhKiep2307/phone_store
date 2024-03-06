@@ -8,7 +8,8 @@ ob_start();
 		echo "<script>window.location = '404.php'</script>";
 	} else {
 		$id = $_GET['proid'];
-	}if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+	}
+	if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 		$GH_SOLUONG = $_POST['GH_SOLUONG'];
         $addcart = $ct-> add_cart($GH_SOLUONG, $id);
     }  
